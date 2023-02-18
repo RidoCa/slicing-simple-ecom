@@ -486,7 +486,10 @@ class CartView extends GetView<CartController> {
                                 ),
                               ),
                             )
-                          : SizedBox(
+                          : Container(
+                              margin: EdgeInsets.only(
+                                bottom: 20,
+                              ),
                               width: Get.size.width,
                               child: ElevatedButton(
                                 child: Text(
