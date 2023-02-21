@@ -66,7 +66,7 @@ class HomeController extends GetxController {
 
   String format(double n) {
     var formatter = NumberFormat('#,###,000');
-    return formatter.format(n);
+    return formatter.format(n).replaceAll(',', '.');
   }
 
   void increment() => count.value++;

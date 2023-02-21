@@ -12,7 +12,8 @@ class CartView extends GetView<CartController> {
     var data = Get.arguments;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
@@ -60,6 +61,9 @@ class CartView extends GetView<CartController> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           Text(
                             controller.confirmPayment.value == true
                                 ? "Dalam perjalanan"
@@ -88,17 +92,27 @@ class CartView extends GetView<CartController> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Text(
-                        controller.confirmPayment.value == true
-                            ? controller.dateNow()
-                            : "-",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 10,
+                          bottom: 5,
+                        ),
+                        child: Text(
+                          controller.confirmPayment.value == true
+                              ? controller.dateNow()
+                              : "-",
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
                       const Divider(
+                        height: 0,
                         color: Colors.grey,
+                      ),
+                      const SizedBox(
+                        height: 15,
                       ),
                     ],
                   ),
@@ -113,116 +127,126 @@ class CartView extends GetView<CartController> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            controller.courSelected.toString(),
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 10,
+                          bottom: 5,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              controller.courSelected.toString(),
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () => controller.confirmPayment.value ==
-                                    false
-                                ? Get.bottomSheet(
-                                    Column(
-                                      children: [
-                                        OutlinedButton(
-                                          onPressed: () {
-                                            Get.back();
-                                          },
-                                          child: const Text('Cancel'),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: ListView.builder(
-                                              itemCount:
-                                                  controller.courierList.length,
-                                              itemBuilder: (context, index) {
-                                                return GestureDetector(
-                                                  onTap: () {
-                                                    controller.courSelected
-                                                        .value = controller
-                                                            .courierList
-                                                            .elementAt(
-                                                                index)['name'] +
-                                                        ' - Rp.' +
-                                                        controller.format(
-                                                            double.parse(
-                                                          controller.courierList
-                                                              .elementAt(index)[
-                                                                  'price']
-                                                              .toString(),
-                                                        ));
+                            GestureDetector(
+                              onTap: () => controller.confirmPayment.value ==
+                                      false
+                                  ? Get.bottomSheet(
+                                      Column(
+                                        children: [
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                            child: const Text('Cancel'),
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: ListView.builder(
+                                                itemCount: controller
+                                                    .courierList.length,
+                                                itemBuilder: (context, index) {
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      controller.courSelected
+                                                          .value = controller
+                                                                  .courierList
+                                                                  .elementAt(
+                                                                      index)[
+                                                              'name'] +
+                                                          ' - Rp.' +
+                                                          controller.format(
+                                                              double.parse(
+                                                            controller
+                                                                .courierList
+                                                                .elementAt(index)[
+                                                                    'price']
+                                                                .toString(),
+                                                          ));
+                                                      controller.invoiceNumber
+                                                              .value =
+                                                          '#${controller.randomString()}';
 
-                                                    Get.back();
-                                                  },
-                                                  child: Container(
-                                                    color: Colors.transparent,
-                                                    child: Column(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              controller
-                                                                      .courierList
-                                                                      .elementAt(
-                                                                          index)[
-                                                                  'name'],
-                                                            ),
-                                                            Text(
-                                                              'Rp. ${controller.format(double.parse(controller.courierList.elementAt(index)['price']))}',
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const Divider(
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ],
+                                                      Get.back();
+                                                    },
+                                                    child: Container(
+                                                      color: Colors.transparent,
+                                                      child: Column(
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                controller
+                                                                    .courierList
+                                                                    .elementAt(
+                                                                        index)['name'],
+                                                              ),
+                                                              Text(
+                                                                'Rp.${controller.format(double.parse(controller.courierList.elementAt(index)['price']))}',
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const Divider(
+                                                            color: Colors.grey,
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
-                                              },
+                                                  );
+                                                },
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    backgroundColor: Colors.white,
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  )
-                                : SizedBox(),
-                            child: controller.confirmPayment.value == false
-                                ? Text(
-                                    controller.courSelected.value == '-'
-                                        ? 'Pilih Kurir'
-                                        : 'Ganti Kurir',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0xff1A87EB),
-                                    ),
-                                  )
-                                : Text("Dikirim",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.grey,
-                                    )),
-                          ),
-                        ],
+                                        ],
+                                      ),
+                                      backgroundColor: Colors.white,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                              child: controller.confirmPayment.value == false
+                                  ? Text(
+                                      controller.courSelected.value == '-'
+                                          ? 'Pilih Kurir'
+                                          : 'Ganti Kurir',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xff1A87EB),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                            ),
+                          ],
+                        ),
                       ),
                       const Divider(
+                        height: 0,
                         color: Colors.grey,
+                      ),
+                      const SizedBox(
+                        height: 15,
                       ),
                     ],
                   ),
@@ -237,17 +261,27 @@ class CartView extends GetView<CartController> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Text(
-                        controller.confirmPayment.value == true
-                            ? controller.randomString()
-                            : "-",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 10,
+                          bottom: 5,
+                        ),
+                        child: Text(
+                          controller.confirmPayment.value == true
+                              ? controller.randomString()
+                              : "-",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                       const Divider(
+                        height: 0,
                         color: Colors.grey,
+                      ),
+                      const SizedBox(
+                        height: 15,
                       ),
                     ],
                   ),
@@ -262,9 +296,12 @@ class CartView extends GetView<CartController> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         Text(
-                          "#${controller.randomString()}",
-                          style: TextStyle(
+                          "${controller.invoiceNumber}",
+                          style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
@@ -307,25 +344,25 @@ class CartView extends GetView<CartController> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               const Text(
-                                'Price',
+                                'Price : ',
                                 style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey,
+                                  fontSize: 12,
+                                  color: Color(0xff3A3A3A),
                                 ),
                               ),
                               Flexible(
                                 child: Container(
-                                  margin: EdgeInsets.only(
-                                    left: 25,
+                                  margin: const EdgeInsets.only(
+                                    left: 0,
                                   ),
                                   child: Text(
-                                    'Rp. ${controller.format(double.parse(data['price']))}',
+                                    'Rp.${controller.format(double.parse(data['price']))}',
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontFamily: 'Roboto',
-                                      color: Color(0xFF212121),
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12.0,
+                                      // fontFamily: 'Roboto',
+                                      color: Color(0xff3A3A3A),
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),
@@ -336,7 +373,7 @@ class CartView extends GetView<CartController> {
                             '500gr',
                             style: TextStyle(
                               fontSize: 9,
-                              color: Colors.grey,
+                              color: Color(0xff3A3A3A),
                             ),
                           ),
                         ],
@@ -351,8 +388,8 @@ class CartView extends GetView<CartController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
                           vertical: 10,
                         ),
                         child: Text(
@@ -375,13 +412,16 @@ class CartView extends GetView<CartController> {
                             ),
                           ),
                           Text(
-                            'Rp. ${controller.format(double.parse(data['price']))}',
+                            'Rp.${controller.format(double.parse(data['price']))}',
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 6,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -394,7 +434,7 @@ class CartView extends GetView<CartController> {
                             ),
                           ),
                           Text(
-                            'Rp. ${controller.format(
+                            'Rp.${controller.format(
                                   double.parse(controller.platformFee.value),
                                 ).toString()}',
                             style: const TextStyle(
@@ -404,12 +444,15 @@ class CartView extends GetView<CartController> {
                           ),
                         ],
                       ),
+                      const SizedBox(
+                        height: 6,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Ongkos kirim",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                             ),
@@ -417,7 +460,7 @@ class CartView extends GetView<CartController> {
                           Text(
                             controller.courSelected.value == '-'
                                 ? '-'
-                                : 'Rp. ${controller.format(
+                                : 'Rp.${controller.format(
                                     double.parse(
                                       controller.courSelected
                                           .split('Rp.')[1]
@@ -431,24 +474,30 @@ class CartView extends GetView<CartController> {
                           ),
                         ],
                       ),
-                      Divider(
-                        color: Colors.grey,
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 15,
+                        ),
+                        child: Divider(
+                          height: 0,
+                          color: Colors.grey,
+                        ),
                       ),
                       // total
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Total",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           Text(
                             controller.courSelected.value == '-'
-                                ? 'Rp. ${controller.format(double.parse(data['price']) + 1000)}'
-                                : 'Rp. ${controller.format(
+                                ? 'Rp.${controller.format(double.parse(data['price']) + 1000)}'
+                                : 'Rp.${controller.format(
                                     double.parse(data['price']) +
                                         double.parse(
                                           controller.courSelected
@@ -465,36 +514,26 @@ class CartView extends GetView<CartController> {
                         ],
                       ),
                       Container(
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                           top: 15,
                           bottom: 20,
                         ),
-                        child: Text(
+                        child: const Text(
                           "Segera lakukan pembayaran",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 10,
                           ),
                         ),
                       ),
                       controller.confirmPayment.value
-                          ? const SizedBox(
-                              height: 50,
-                              child: Text(
-                                "Terima kasih telah melakukan pembelian barang, barang anda sedang dikirim ke tempat anda,",
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                            )
+                          ? const SizedBox()
                           : Container(
-                              margin: EdgeInsets.only(
+                              height: 42,
+                              margin: const EdgeInsets.only(
                                 bottom: 20,
                               ),
                               width: Get.size.width,
                               child: ElevatedButton(
-                                child: Text(
-                                    "Konfirmasi pembayaran".toUpperCase(),
-                                    style: TextStyle(fontSize: 14)),
                                 style: ButtonStyle(
                                   foregroundColor:
                                       MaterialStateProperty.all<Color>(
@@ -504,51 +543,63 @@ class CartView extends GetView<CartController> {
                                           ? MaterialStateProperty.all<Color>(
                                               Colors.grey)
                                           : MaterialStateProperty.all<Color>(
-                                              Colors.blue,
+                                              Color(0xff1A87EB),
                                             ),
                                   shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
-                                      side: BorderSide(color: Colors.grey),
+                                      side:
+                                          const BorderSide(color: Colors.grey),
                                     ),
                                   ),
                                 ),
-                                onPressed: () => Get.defaultDialog(
-                                  title: "Konfirmasi",
-                                  titleStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                  ),
-                                  textConfirm: "Setuju",
-                                  textCancel: "Batal",
-                                  cancelTextColor: Colors.black,
-                                  confirmTextColor: Colors.white,
-                                  buttonColor: Colors.blue,
-                                  barrierDismissible: false,
-                                  onConfirm: () {
-                                    controller.confirmPayment.value = true;
-                                    controller.removeSelectedItem(
-                                      data['name'].toString(),
-                                    );
-                                    Get.back();
-                                  },
-                                  content: Column(
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 10,
+                                onPressed: () => controller
+                                            .courSelected.value !=
+                                        '-'
+                                    ? Get.defaultDialog(
+                                        title: "Konfirmasi",
+                                        titleStyle: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
                                         ),
-                                        child: const Text(
-                                          "Apakah anda yakin ingin melanjutkan proses pembayaran?",
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.black,
-                                          ),
+                                        textConfirm: "Setuju",
+                                        textCancel: "Batal",
+                                        cancelTextColor: Colors.black,
+                                        confirmTextColor: Colors.white,
+                                        buttonColor: Colors.blue,
+                                        barrierDismissible: false,
+                                        onConfirm: () {
+                                          controller.confirmPayment.value =
+                                              true;
+                                          controller.removeSelectedItem(
+                                            data['name'].toString(),
+                                          );
+                                          Get.back();
+                                        },
+                                        content: Column(
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                              ),
+                                              child: const Text(
+                                                "Apakah anda yakin ingin melanjutkan proses pembayaran?",
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
+                                      )
+                                    : Get.snackbar('Error',
+                                        'Silahkan pilih kurir terlebih dahulu untuk melakukan konfirmasi pembayaran'),
+                                child: const Text(
+                                  "Konfirmasi pembayaran",
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ),
                             ),

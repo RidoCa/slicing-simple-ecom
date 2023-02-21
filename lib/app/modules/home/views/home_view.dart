@@ -46,11 +46,12 @@ class HomeView extends GetView<HomeController> {
                     vertical: 6,
                   ),
                   child: GridView.builder(
+                    primary: false,
                     itemCount: controller.trendsList.length,
                     shrinkWrap: true,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 80 / 135,
+                      childAspectRatio: 80 / 150,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 20,
                       crossAxisCount: 2,
@@ -70,7 +71,7 @@ class HomeView extends GetView<HomeController> {
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(
-                              Radius.circular(2),
+                              Radius.circular(8),
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -105,6 +106,9 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ],
                               ),
+                              const SizedBox(
+                                height: 15,
+                              ),
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 10,
@@ -124,6 +128,7 @@ class HomeView extends GetView<HomeController> {
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                           fontSize: 14,
+                                          fontWeight: FontWeight.w400,
                                         ),
                                       ),
                                     ),
@@ -136,7 +141,7 @@ class HomeView extends GetView<HomeController> {
                                           'Price',
                                           style: TextStyle(
                                             fontSize: 14,
-                                            color: Colors.grey,
+                                            color: Color(0xff959595),
                                           ),
                                         ),
                                         Flexible(
@@ -145,19 +150,19 @@ class HomeView extends GetView<HomeController> {
                                               left: 25,
                                             ),
                                             child: Text(
-                                              'Rp. ${controller.format(
+                                              'Rp.${controller.format(
                                                 double.parse(
-                                                  controller.trendsList.value
+                                                  controller.trendsList
                                                       .elementAt(
                                                           index)['price'],
                                                 ),
                                               )}',
                                               overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 13.0,
                                                 fontFamily: 'Poppins',
-                                                color: Color(0xFF212121),
-                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w600,
                                               ),
                                             ),
                                           ),
@@ -173,6 +178,9 @@ class HomeView extends GetView<HomeController> {
                       );
                     },
                   ),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
               ],
             ),

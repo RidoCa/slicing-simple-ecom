@@ -15,6 +15,7 @@ class CartController extends GetxController {
     {'name': 'POS', 'price': '70000'},
   ].obs;
 
+  RxString invoiceNumber = '-'.obs;
   RxString courSelected = '-'.obs;
   RxString platformFee = '1000'.obs;
   RxBool confirmPayment = false.obs;
@@ -40,7 +41,7 @@ class CartController extends GetxController {
 
   String format(double n) {
     var formatter = NumberFormat('#,###,000');
-    return formatter.format(n);
+    return formatter.format(n).replaceAll(',', '.');
   }
 
   String randomString() {
